@@ -1,0 +1,6 @@
+# Database settings.
+database:
+  driverClass: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  user: user123
+  password: user123
+  url: jdbc:sqlserver://192.168.1.7
