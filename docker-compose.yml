@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  sql:
+    container_name: docker-sql
+    build:
+      context: ./
+      dockerfile: Dockerfile-db.dockerfile
+    restart: always
+    expose:
+      - 1433
+  sql-migrate:
+    container_name: docker-sql-migrate
+    build:
+      context: ./
+      dockerfile: Dockerfile-db-migrate.dockerfile
+    restart: on-failure
+    command: "/opt/mssql-tools/bin/sqlcmd -S sql -U SA -P 'User12333!' -i '/init.sql' "
+    depends_on:
+      - sql
+    links:
+      - sql:sql
+  web:
+    container_name: dropwizard-crud-application
+    build:
+      context: ./
+      dockerfile: Dockerfile
+
+    depends_on:
+      - sql
+    ports:
+      - 8080:8080
+    links:
+      - sql:sql
