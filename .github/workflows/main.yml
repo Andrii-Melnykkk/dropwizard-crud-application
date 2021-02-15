@@ -44,5 +44,6 @@ jobs:
           # Path to the Dockerfile
           file: ./Dockerfile          
           push: true
+          tags: latest
      
 
